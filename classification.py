@@ -1,7 +1,11 @@
 #import the necessary modules/libraries
 import streamlit as st
 import pandas as pd
-from sklearn.datasets import load_iris
+try:
+    from sklearn.datasets import load_iris
+    print("Successfully imported scikit-learn!")
+except ImportError as e:
+    print(f"Error: {e}")
 from sklearn.ensemble import RandomForestClassifier
 
 st.title("Vishwas App")
