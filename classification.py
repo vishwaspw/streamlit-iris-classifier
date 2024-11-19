@@ -3,13 +3,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+import sqlite3
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.decomposition import PCA
-import shap
-import sqlite3
 from datetime import datetime
 
 # Initialize database
@@ -25,6 +25,16 @@ def init_db():
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS feedback (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            text_feedback TEXT,
+            thumbs_feedback TEXT,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(user_id) REFERENCES user_info(id)
+        )
+    """)
     conn.commit()
     conn.close()
 
@@ -38,6 +48,17 @@ def save_user_data(name, email, age):
         INSERT INTO user_info (name, email, age)
         VALUES (?, ?, ?)
     """, (name, email, age))
+    conn.commit()
+    conn.close()
+
+# Save feedback to the database
+def save_feedback(user_id, text_feedback, thumbs_feedback):
+    conn = sqlite3.connect("user_data.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+        INSERT INTO feedback (user_id, text_feedback, thumbs_feedback)
+        VALUES (?, ?, ?)
+    """, (user_id, text_feedback, thumbs_feedback))
     conn.commit()
     conn.close()
 
@@ -64,7 +85,7 @@ model = train_model()
 menu = [
     "User Info", "Species Prediction", "Feature Visualization",
     "Train Your Model", "Model Performance", "Feature Importance",
-    "Dimensionality Reduction", "View User Data", "About"
+    "Dimensionality Reduction", "View User Data", "About", "Feedback"
 ]
 st.sidebar.title("Navigation")
 choice = st.sidebar.radio("Go to:", menu)
@@ -139,13 +160,6 @@ elif choice == "Feature Importance":
 
     st.write(importance_df.sort_values("Importance", ascending=False))
 
-    st.write("### SHAP Explainer")
-    explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(df.iloc[:, :-1])
-
-    shap.summary_plot(shap_values, df.iloc[:, :-1], show=False)
-    st.pyplot(plt.gcf())
-
 elif choice == "Dimensionality Reduction":
     st.title("Dimensionality Reduction")
     if st.button("Perform PCA"):
@@ -169,7 +183,7 @@ elif choice == "View User Data":
 
 elif choice == "About":
     st.title("About This App")
-    st.write("""
+    st.write(""" 
         This app demonstrates various Machine Learning functionalities:
         - User information collection
         - Species prediction using Random Forest
@@ -179,3 +193,18 @@ elif choice == "About":
         - Dimensionality reduction
         - Viewing stored user data
     """)
+
+elif choice == "Feedback":
+    st.title("Provide Your Valuable Feedback")
+    st.write("Your feedback will help us improve the app.")
+    
+    text_feedback = st.text_area("Enter your feedback here:")
+    thumbs_feedback = st.radio("Rate your experience", ("Thumbs Up", "Thumbs Down"))
+
+    if st.button("Submit Feedback"):
+        if text_feedback:
+            user_id = 1  # Default or dynamic user ID based on user data
+            save_feedback(user_id, text_feedback, thumbs_feedback)
+            st.success("Thank you for your feedback!")
+        else:
+            st.warning("Please provide some feedback.")
