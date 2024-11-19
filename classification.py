@@ -13,7 +13,7 @@ from sklearn.decomposition import PCA
 import shap
 import sqlite3
 from datetime import datetime
-
+st.logo("logo.jpg")
 # Initialize database
 def init_db():
     conn = sqlite3.connect("user_data.db")
@@ -66,7 +66,7 @@ model = train_model()
 menu = [
     "User Info", "Species Prediction", "Feature Visualization",
     "Train Your Model", "Model Performance", "Feature Importance",
-    "Dimensionality Reduction", "View User Data", "About"
+    "Dimensionality Reduction", "View User Data", "About", "Feedback"
 ]
 st.sidebar.title("Navigation")
 choice = st.sidebar.radio("Go to:", menu)
@@ -181,3 +181,12 @@ elif choice == "About":
         - Dimensionality reduction
         - Viewing stored user data
     """)
+elif choice == "Feedback":
+    st.title("Do provide your valuable feedback")
+    st.write("This will help us to improve")
+    st.text_area(" Feedback in the text format")
+    st.audio_input(" Voice Message")
+    st.feedback(" thumbs")
+    
+    
+    
