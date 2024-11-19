@@ -4,14 +4,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+<<<<<<< HEAD
 import sqlite3
+=======
+os.environ["STREAMLIT_LOG_LEVEL"] = "debug"
+>>>>>>> 6d018a660561dc71a7b1bd0b4b0a0e2fce4db289
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.decomposition import PCA
 from datetime import datetime
-
+st.logo("logo.jpg")
 # Initialize database
 def init_db():
     conn = sqlite3.connect("user_data.db")
@@ -193,6 +197,7 @@ elif choice == "About":
         - Dimensionality reduction
         - Viewing stored user data
     """)
+<<<<<<< HEAD
 
 elif choice == "Feedback":
     st.title("Provide Your Valuable Feedback")
@@ -208,3 +213,14 @@ elif choice == "Feedback":
             st.success("Thank you for your feedback!")
         else:
             st.warning("Please provide some feedback.")
+=======
+elif choice == "Feedback":
+    st.title("Do provide your valuable feedback")
+    st.write("This will help us to improve")
+    st.text_area(" Feedback in the text format")
+    st.audio_input(" Voice Message")
+    st.feedback(" thumbs")
+    
+    
+    
+>>>>>>> 6d018a660561dc71a7b1bd0b4b0a0e2fce4db289
