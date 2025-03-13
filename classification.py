@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 import sqlite3
+import subprocess
+subprocess.call(['pip', 'install', 'matplotlib'])
 os.environ["STREAMLIT_LOG_LEVEL"] = "debug"
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
