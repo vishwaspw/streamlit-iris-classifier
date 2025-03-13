@@ -42,5 +42,5 @@ This project is an interactive web application built using **Streamlit** for Iri
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/streamlit-iris-classifier.git
+   git clone https://github.com/vishwaspw/streamlit-iris-classifier.git
    cd streamlit-iris-classifier
