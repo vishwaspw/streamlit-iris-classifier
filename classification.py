@@ -4,11 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
-<<<<<<< HEAD
 import sqlite3
-=======
 os.environ["STREAMLIT_LOG_LEVEL"] = "debug"
->>>>>>> 6d018a660561dc71a7b1bd0b4b0a0e2fce4db289
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
@@ -197,8 +194,6 @@ elif choice == "About":
         - Dimensionality reduction
         - Viewing stored user data
     """)
-<<<<<<< HEAD
-
 elif choice == "Feedback":
     st.title("Provide Your Valuable Feedback")
     st.write("Your feedback will help us improve the app.")
@@ -213,7 +208,6 @@ elif choice == "Feedback":
             st.success("Thank you for your feedback!")
         else:
             st.warning("Please provide some feedback.")
-=======
 elif choice == "Feedback":
     st.title("Do provide your valuable feedback")
     st.write("This will help us to improve")
@@ -221,6 +215,3 @@ elif choice == "Feedback":
     st.audio_input(" Voice Message")
     st.feedback(" thumbs")
     
-    
-    
->>>>>>> 6d018a660561dc71a7b1bd0b4b0a0e2fce4db289
